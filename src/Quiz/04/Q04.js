@@ -30,19 +30,27 @@ export default class Q04 extends Component {
     const { todos } = this.state
     const idx = todos.findIndex(todo => todo.id === id)
 
-    todos[idx].done = !todos[idx].done
+    console.log(idx, id)
 
     this.setState({
-      todos
+      todos: [
+        ...todos.slice(0, idx),
+        {
+          ...todos[idx],
+          done: !todos[idx].done
+        },
+        ...todos.slice(idx + 1, todos.length)
+      ]
     })
   }
 
   render() {
     const { todos } = this.state
+    const { id, title, done } = todos
 
     return (
       <>
-        <Todos items={todos} handleDone={this.handleDone} />
+        <Todos items={todos} handleDone={this.handleDone} done={done} />
       </>
     )
   }
@@ -50,7 +58,8 @@ export default class Q04 extends Component {
 
 class Todos extends PureComponent {
   render() {
-    const { items, handleDone } = this.props
+    const { items, handleDone, done } = this.props
+    console.log({ items })
     return (
       <ul>
         {items.map(item => (
