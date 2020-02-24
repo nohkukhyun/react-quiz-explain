@@ -6,6 +6,9 @@
  * 이 때, 렌더링이 필요없는 Title 컴포넌트도 다시 렌더링 되고 있습니다.
  *
  * 어떻게 하면, Title 컴포넌트의 렌더링을 막을 수 있을까요?
+ *
+ *
+ * shouldComponentUpdate 업데이트 되는것만
  */
 
 import React, { Component } from 'react'
@@ -42,6 +45,14 @@ export default class Quiz03 extends Component {
 }
 
 class Title extends Component {
+  shouldComponentUpdate(nextProps) {
+    // console.log({ nextProps })
+    if (nextProps.title !== this.props.title) {
+      return true
+    }
+    return false
+  }
+
   render() {
     console.log('Title rendered')
 

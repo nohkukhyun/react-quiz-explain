@@ -1,11 +1,16 @@
 /**
  *
- * User 와 Posts 를 가져와 화면에 렌더링 시키는 코드입니다. (setTimeout 을 이용해, 서버와 비동기 통신을 했다고 가정합니다.)
+ * User 와 Posts 를 가져와 화면에 렌더링 시키는 코드입니다.
+ * (setTimeout 을 이용해, 서버와 비동기 통신을 했다고 가정합니다.)
  * Post와 User는 관계 없는 데이터라고 가정한다면, 성능을 개선시킬 수 있는 방법은 무엇이 있을까요?
  *
  * 추가로...
  *
  * retry와 timeout 은 어떻게 구현 할 수 있을까요?
+ *
+ * 참고함
+ * async 함수는 await 사용 여부와 상관없이 항상 promise 를 반환한다.
+ *
  *
  */
 
@@ -16,11 +21,15 @@ function Q02() {
   const [posts, setPosts] = useState([])
 
   const whatsup = useCallback(async () => {
-    const posts = await getPosts()
-    const user = await getUser()
+    Promise.all([getPosts(), getUser()]).then(([posts, user]) => {
+      setUser(user)
+      setPosts(posts)
+    })
+    // const posts = await getPosts()
+    // const user = await getUser()
 
-    setUser(user)
-    setPosts(posts)
+    // setUser(user)
+    // setPosts(posts)
   }, [])
 
   useEffect(() => {

@@ -11,9 +11,14 @@ export default class Q01 extends Component {
   }
 
   handleClick = () => {
+    this.Sum(this.state.count)
+  }
+
+  Sum = count => {
     for (let i = 0; i < 20; i++) {
-      this.setState({ count: this.state.count + 1 })
+      this.setState({ count: (count += i) })
     }
+    return count
   }
 
   componentDidMount() {}
